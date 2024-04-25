@@ -9,6 +9,7 @@ import { inter, suwannaphum, localCustomFont } from "./fonts";
 import { Metadata } from "next";
 import StoreProvider from "../StoreProvider";
 import SessionWrapper from "../SessionProvider";
+import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   title: "ISTAD Ecommerce Web",
@@ -28,18 +29,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${inter.variable} ${suwannaphum.variable} ${localCustomFont.variable}`}
-      >
-        <StoreProvider>
-          <header>
-            <NavbarComponent />
-          </header>
-          <ErrorBoundary errorComponent={Error}>
-            <Suspense fallback={<Loading />}>{children}</Suspense>
-          </ErrorBoundary>
-        </StoreProvider>
-      </body>
+      <SessionProvider>
+        <body
+          className={`${inter.variable} ${suwannaphum.variable} ${localCustomFont.variable}`}
+        >
+          <StoreProvider>
+            <header>
+              <NavbarComponent />
+            </header>
+            <ErrorBoundary errorComponent={Error}>
+              <Suspense fallback={<Loading />}>{children}</Suspense>
+            </ErrorBoundary>
+          </StoreProvider>
+        </body>
+      </SessionProvider>
     </html>
   );
 }

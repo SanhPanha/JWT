@@ -76,6 +76,26 @@ export default function TestJWT() {
       });
   };
 
+  //Handle Logout
+  const handleLogout = async () => {
+    fetch(process.env.NEXT_PUBLIC_API_URL + "/logout", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({}),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Data from Logout:", data);
+        setAccessToken(data.accessToken);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <main className="h-screen grid place-content-center">
       <h1 className="text-5xl">Test Handle Login</h1>
@@ -101,6 +121,13 @@ export default function TestJWT() {
           Refresh
         </button>
       )}
+
+      <button
+        className="text-gray-100 text-3xl p-4 my-4 bg-blue-600 rounded-xl"
+        onClick={handleLogout}
+      >
+        Logout
+      </button>
     </main>
   );
 }
